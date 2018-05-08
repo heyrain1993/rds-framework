@@ -2,7 +2,7 @@ package com.heyu.framework.entity;
 
 import java.io.Serializable;
 
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,9 @@ public abstract class BaseEntity implements Serializable {
 	/**
 	 * 实体编号:唯一标识
 	 */
-	public String id;
+	protected String id;
+	
+	protected Page<T> page;
 	
 	public BaseEntity() {
 		
@@ -35,6 +37,14 @@ public abstract class BaseEntity implements Serializable {
 		this.id = id;
 	}
 	
+	public Page<T> getPage() {
+		return page;
+	}
+
+	public void setPage(Page<T> page) {
+		this.page = page;
+	}
+
 	/**
 	 * 插入之前执行方法
 	 */

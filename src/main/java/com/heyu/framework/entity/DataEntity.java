@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public abstract class DataEntity extends BaseEntity implements Serializable{
+public abstract class DataEntity<T> extends BaseEntity<T> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
