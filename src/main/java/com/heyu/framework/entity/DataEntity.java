@@ -3,6 +3,7 @@ package com.heyu.framework.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.heyu.framework.utils.IdUtils;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -64,10 +65,14 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	
 	public DataEntity(String id) {
 		super(id);
+		this.delFlag =  DEL_FLAG_NORMAL;
 	}
 	
 	@Override
 	public void preInsert() {
+		if(this.isNewRecord()){
+			setId(IdUtils.uuid());
+		}
 		this.createTime = new Date();
 		this.updateTime = this.createTime;
 	}

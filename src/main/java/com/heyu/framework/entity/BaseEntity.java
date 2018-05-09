@@ -1,5 +1,9 @@
 package com.heyu.framework.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.heyu.framework.utils.StringUtils;
+import org.hibernate.validator.constraints.Length;
+
 import java.io.Serializable;
 
 public abstract class BaseEntity<T> implements Serializable {
@@ -17,9 +21,13 @@ public abstract class BaseEntity<T> implements Serializable {
 	 * 实体编号:唯一标识
 	 */
 	protected String id;
-	
-	protected Page<T> page;
-	
+
+	@JsonIgnore
+	protected PageZ<T> page;
+
+	@JsonIgnore
+	protected boolean isNewRecord = true;
+
 	public BaseEntity() {
 		
 	}
@@ -29,6 +37,19 @@ public abstract class BaseEntity<T> implements Serializable {
 		this.id = id;
 	}
 
+	/**
+	 * 判断是否为新纪录：id为空或isNewRecord为true表示新纪录
+	 * @return
+	 */
+	public boolean isNewRecord() {
+		return this.isNewRecord || StringUtils.isEmpty(getId());
+	}
+
+	public void setNewRecord(boolean newRecord) {
+		isNewRecord = newRecord;
+	}
+
+	@Length(min = 32,max = 64)
 	public String getId() {
 		return id;
 	}
@@ -37,11 +58,11 @@ public abstract class BaseEntity<T> implements Serializable {
 		this.id = id;
 	}
 	
-	public Page<T> getPage() {
+	public PageZ<T> getPage() {
 		return page;
 	}
 
-	public void setPage(Page<T> page) {
+	public void setPage(PageZ<T> page) {
 		this.page = page;
 	}
 
