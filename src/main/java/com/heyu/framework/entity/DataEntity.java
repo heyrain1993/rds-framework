@@ -17,9 +17,9 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	
 	protected String remark;//备注
 	
-	protected Date createTime;//创建时间
+	protected Date createDate;//创建时间
 	
-	protected Date updateTime;//更新时间
+	protected Date updateDate;//更新时间
 
 	@JsonIgnore
 	@Length(min = 1, max = 1)
@@ -41,21 +41,21 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	}
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getCreateTime() {
-		return createTime;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	public Date getUpdateTime() {
-		return updateTime;
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 	
 	public DataEntity() {
@@ -73,12 +73,12 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 		if(this.isNewRecord()){
 			setId(IdUtils.uuid());
 		}
-		this.createTime = new Date();
-		this.updateTime = this.createTime;
+		this.createDate = new Date();
+		this.updateDate = this.createDate;
 	}
 	
 	@Override
 	public void preUpdate() {
-		this.updateTime = new Date();
+		this.updateDate = new Date();
 	}
 }

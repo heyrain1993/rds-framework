@@ -23,7 +23,7 @@ public abstract class BaseEntity<T> implements Serializable {
 	protected String id;
 
 	@JsonIgnore
-	protected PageZ<T> page;
+	protected Page<T> page;
 
 	@JsonIgnore
 	protected boolean isNewRecord = true;
@@ -58,11 +58,11 @@ public abstract class BaseEntity<T> implements Serializable {
 		this.id = id;
 	}
 	
-	public PageZ<T> getPage() {
+	public Page<T> getPage() {
 		return page;
 	}
 
-	public void setPage(PageZ<T> page) {
+	public void setPage(Page<T> page) {
 		this.page = page;
 	}
 

@@ -2,11 +2,11 @@ package com.heyu.framework.service;
 
 import java.util.List;
 
+import com.heyu.framework.entity.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.heyu.framework.dao.CurdDao;
 import com.heyu.framework.entity.DataEntity;
-import com.heyu.framework.entity.PageZ;
 
 public class CurdService<D extends CurdDao<T>,T extends DataEntity<T>>{
 
@@ -46,7 +46,7 @@ public class CurdService<D extends CurdDao<T>,T extends DataEntity<T>>{
 	 * @param entity
 	 * @return
 	 */
-	public List<T> findPage(PageZ<T> page, T entity){
+	public List<T> findPage(Page<T> page, T entity){
 		entity.setPage(page);
 		return this.dao.findList(entity);
 	}

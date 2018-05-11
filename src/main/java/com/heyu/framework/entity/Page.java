@@ -2,23 +2,26 @@ package com.heyu.framework.entity;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Page<T> {
 
-    private Integer pageNo;//当前页
+    private Integer pageNo = 1;//当前页
 
-    private Integer pageSize;//每页条数
+    private Integer pageSize = 15;//每页条数
 
     private Boolean useFlag = true;//是否使用分页
 
     private Boolean checkFlag;//检查当前页码是否合法(大于最大页或小于最小页都不合法)
 
-    private Integer total;//总记录数
+    private Integer totalRecord;//总记录数
 
     private Integer totalPage;//总页数
 
-    private List<T> list = new ArrayList<>();
+    //private HashMap<String,Object> params = new HashMap<>();//其他参数封装成Map
+
+    private List<T> list = new ArrayList<>();//对应当前页记录数
 
     public List<T> getList() {
         return list;
@@ -60,19 +63,25 @@ public class Page<T> {
         this.checkFlag = checkFlag;
     }
 
-    public Integer getTotal() {
-        return total;
-    }
-
-    public void setTotal(Integer total) {
-        this.total = total;
-    }
-
     public Integer getTotalPage() {
         return totalPage;
     }
 
     public void setTotalPage(Integer totalPage) {
         this.totalPage = totalPage;
+    }
+
+    public Integer getTotalRecord() {
+        return totalRecord;
+    }
+
+    /**
+     * 设置总记录数，并计算总页数
+     * @param totalRecord
+     */
+    public void setTotalRecord(Integer totalRecord) {
+        this.totalRecord = totalRecord;
+        int totalPage = totalRecord % pageSize == 0 ? totalRecord / pageSize : totalRecord / pageSize + 1;
+        this.setTotalPage(totalPage);
     }
 }
