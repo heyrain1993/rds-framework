@@ -42,13 +42,17 @@ public class CurdService<D extends CurdDao<T>,T extends DataEntity<T>>{
 
 	/**
 	 * 查询实体-分页
+	 * 根据page中的pageNo和pageSize获取记录以及总记录数等
+	 * 再将实体记录设置进page，并返回page
 	 * @param page
 	 * @param entity
 	 * @return
 	 */
-	public List<T> findPage(Page<T> page, T entity){
+	public Page<T> findPage(Page<T> page, T entity){
 		entity.setPage(page);
-		return this.dao.findList(entity);
+		List<T> list = this.dao.findList(entity);
+		page.setList(list);
+		return page;
 	}
 
 	/**

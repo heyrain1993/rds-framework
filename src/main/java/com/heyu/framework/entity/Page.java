@@ -2,8 +2,11 @@ package com.heyu.framework.entity;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.heyu.framework.utils.StringUtils;
 
 public class Page<T> {
 
@@ -23,7 +26,22 @@ public class Page<T> {
 
     private List<T> list = new ArrayList<>();//对应当前页记录数
 
-    public List<T> getList() {
+    public Page(HttpServletRequest request) {
+    	super();
+    	if(request != null) {
+    		String pageNo = request.getParameter("pageNo");
+    		String pageSize = request.getParameter("pageSize");
+    		if(!StringUtils.isEmpty(pageNo) && StringUtils.isEmpty(pageSize)) {
+    			this.setPageNo(Integer.parseInt(pageNo));
+    			this.setPageSize(Integer.parseInt(pageSize));
+    		}
+    	}
+	}
+
+    public Page() {
+    	super();
+    }
+	public List<T> getList() {
         return list;
     }
 

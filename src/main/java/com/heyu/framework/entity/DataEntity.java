@@ -75,6 +75,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 		}
 		this.createDate = new Date();
 		this.updateDate = this.createDate;
+		this.isNewRecord = false;
 	}
 	
 	@Override
