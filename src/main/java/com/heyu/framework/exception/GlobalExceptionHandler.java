@@ -1,7 +1,5 @@
 package com.heyu.framework.exception;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +10,11 @@ import com.heyu.framework.entity.ResultModel;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+	/**
+	 * json异常处理器
+	 * @param e
+	 * @return
+	 */
 	@ExceptionHandler(value = CommonException.class)
 	@ResponseBody
 	public ResultModel<String> jsonErrorHandler(CommonException e){
@@ -20,13 +23,20 @@ public class GlobalExceptionHandler {
 		
 	}
 	
+	/**
+	 * 页面异常处理器
+	 * @param request
+	 * @param e
+	 * @return
+	 */
 	@ExceptionHandler(value = PageException.class)
-	public ModelAndView pageErrorHandler(HttpServletRequest request,PageException e) {
+	public ModelAndView pageErrorHandler(PageException e) {
 		ModelAndView model = new ModelAndView();
 		
-		model.setViewName("error");
-		model.addObject("exception",e);
-		model.addObject("url", request.getRequestURL());
+		model.setViewName("templates/error");
+		model.addObject("code", e.getCode());
+		model.addObject("msg", e.getMsg());
+		model.addObject("message",e.getMessage());
 		return model;
 	}
 	
