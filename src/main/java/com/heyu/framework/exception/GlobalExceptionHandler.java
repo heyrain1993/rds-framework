@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.heyu.framework.entity.ResultModel;
+import com.heyu.framework.model.ResultModel;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

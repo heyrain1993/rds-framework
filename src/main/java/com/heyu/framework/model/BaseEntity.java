@@ -1,4 +1,4 @@
-package com.heyu.framework.entity;
+package com.heyu.framework.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.heyu.framework.utils.StringUtils;

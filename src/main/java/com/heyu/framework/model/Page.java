@@ -1,4 +1,4 @@
-package com.heyu.framework.entity;
+package com.heyu.framework.model;
 
 
 import java.util.ArrayList;

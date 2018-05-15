@@ -1,7 +1,7 @@
 package com.heyu.framework.interceptor;
 
-import com.heyu.framework.entity.BaseEntity;
-import com.heyu.framework.entity.Page;
+import com.heyu.framework.model.BaseEntity;
+import com.heyu.framework.model.Page;
 import com.heyu.framework.utils.ReflectUtils;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;

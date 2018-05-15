@@ -13,7 +13,7 @@ public class PropertiesUtils {
 		String value = "";
 		try {
 			config = new PropertiesConfiguration(fileName);
-			value = config.getString(key, "undefined");
+			value = config.getString(key.toLowerCase(), "undefined");
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}
