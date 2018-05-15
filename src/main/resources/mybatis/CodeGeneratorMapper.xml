@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heyu.framework.dao.CodeGeneratorDao">
+  <resultMap id="TableBaseResultMap" type="com.heyu.framework.model.TableEntity">
+    <id column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="engine" jdbcType="VARCHAR" property="engine" />
+    <result column="t_comment" jdbcType="VARCHAR" property="comment" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createDate" />
+    <collection  property="columns" ofType="com.heyu.framework.model.ColumnEntity">
+    	<result column="column_name" property="columnName" />
+    	<result column="column_type" property="columnType" />
+    	<result column="data_type" property="dataType" />
+    	<result column="comment" property="comment" />
+    	<result column="attr_name" property="attrName" />
+    	<result column="attr_type" property="attrType" />
+    </collection>
+  </resultMap>
+  
+  <resultMap id="ColumnBaseResultMap" type="com.heyu.framework.model.ColumnEntity">
+   	<result column="column_name" property="columnName" />
+   	<result column="column_type" property="columnType" />
+   	<result column="comment" property="comment" />
+   	<result column="default_value" property="defaultValue" />
+   	<result column="attr_name" property="attrName" />
+   	<result column="attr_type" property="attrType" />
+  </resultMap>
+  <sql id="table_Base_Column_List">
+   	i.table_name AS table_name,
+   	i.engine AS engine,
+   	i.table_comment AS t_comment,
+   	i.create_time create_time,
+   	t.column_name AS column_name,
+   	t.column_type AS column_type,
+   	t.data_type AS data_type,
+   	t.column_comment AS comment
+   	
+  </sql>
+  
+   <sql id="column_Base_Column_List">
+   	t.column_name AS column_name,
+   	t.column_type AS column_type,
+   	t.column_comment AS comment,
+   	t.column_default AS default_value
+   	
+  </sql>
+  
+  <select id="findTableList" resultMap="TableBaseResultMap" >
+   SELECT  
+   <include refid="table_Base_Column_List" />
+	FROM information_schema.`TABLES` i 
+	LEFT JOIN information_schema.`COLUMNS` t ON i.TABLE_NAME = t.TABLE_NAME AND i.TABLE_SCHEMA = t.TABLE_SCHEMA
+	WHERE i.TABLE_SCHEMA = (SELECT DATABASE())
+	<if test = "tableName != null and tableName != '' ">
+		and t.table_name = #{tableName}
+	</if>
+  </select>
+  
+  
+    <select id="findColumnEntity" resultMap="ColumnBaseResultMap" parameterType="java.lang.String">
+   SELECT  
+   <include refid="column_Base_Column_List" />
+	FROM information_schema.`COLUMNS` t
+	WHERE t.TABLE_SCHEMA = (SELECT DATABASE()) AND t.table_name = #{tableName}
+  </select>
+ </mapper>

@@ -42,7 +42,7 @@ public abstract class BaseEntity<T> implements Serializable {
 	 * @return
 	 */
 	public boolean isNewRecord() {
-		return this.isNewRecord || StringUtils.isEmpty(getId());
+		return this.isNewRecord && StringUtils.isEmpty(getId());
 	}
 
 	public void setNewRecord(boolean newRecord) {

@@ -1,0 +1,100 @@
+package ${package}.${moduleName}.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.heyu.framework.model.Page;
+import com.heyu.framework.service.BaseService;
+import com.heyu.framework.utils.ValidatorUtil;
+import ${package}.${moduleName}.dao.${className}Dao;
+import ${package}.${moduleName}.model.${className};
+/**
+ * ${comments}
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ *
+ */
+@Service
+public class ${className}Service extends BaseService{
+	@Autowired
+	protected ${className}Dao ${classname}Dao;
+
+	/**
+	 * 根据id查询
+	 * @param id
+	 * @return
+	 */
+	public ${className} findById(String id) {
+		return this.${classname}Dao.findById(id);
+	}
+
+
+	/**
+	 * 查询实体-不分页
+	 * @param ${classname}
+	 * @return
+	 */
+	public List<${className}> findList(${className} ${classname}){
+		return this.${classname}Dao.findAllList(${classname});
+	}
+
+	/**
+	 * 查询实体-分页
+	 * 根据page中的pageNo和pageSize获取记录以及总记录数等
+	 * 再将实体记录设置进page，并返回page
+	 * @param page
+	 * @param ${classname}
+	 * @return
+	 */
+	public Page<${className}> findPage(Page<${className}> page, ${className} ${classname}){
+		${classname}.setPage(page);
+		List<${className}> list = this.${classname}Dao.findList(${classname});
+		page.setList(list);
+		return page;
+	}
+
+	/**
+	 * 保存实体-判断是否是新纪录(新纪录：调用preInsert；旧记录：调用preUpdate)
+	 * @param ${classname}
+	 * @return
+	 */
+	public int save(${className} ${classname}) {
+		if(${classname}.isNewRecord()){
+			${classname}.preInsert();
+			ValidatorUtil.validateEntity(${classname});
+			return this.${classname}Dao.insert(${classname});
+
+		}else{
+			${classname}.preUpdate();
+			ValidatorUtil.validateEntity(${classname});
+			return this.${classname}Dao.update(${classname});
+		}
+	}
+
+	/**
+	 * 删除实体
+	 * @param ${classname}
+	 * @return
+	 */
+	public int delete(String id) {
+		return this.${classname}Dao.delete(id);
+	}
+
+	/**
+	 * 根据ids批量删除实体
+	 * @param ids
+	 * @return
+	 */
+	public boolean deleteBatch(String[] ids) {
+		if (ids == null || ids.length == 0){
+			return false;
+		}
+		if (this.${classname}Dao.deleteBatch(ids) == 0){
+			return false;
+		}
+		return true;
+	}
+}

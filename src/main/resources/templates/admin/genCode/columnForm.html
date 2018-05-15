@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="icon" th:href="@{/images/favicon.ico}" />
+<script type="text/javascript" th:src="@{/js/jquery/jquery.js}"></script>
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/js/jquery-validation/dist/jquery.validate.min.js}"></script>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/js/bootstrap/css/bootstrap.min.css}" />
+<script type="text/javascript"
+	th:src="@{/js/bootstrap/js/bootstrap.min.js}"></script>
+
+<title>Insert title here</title>
+
+</head>
+<body>
+	<div class="container-fluid">
+		<!-- 行布局采用row-fluid -->
+		<div class="row-fluid">
+			<!-- 行中的列布局采用栅格布局，分为12等分，xs/sm/md/lg分别标识屏幕大小 -->
+			<div class="col-xs-12" th:insert="~{admin/partial/header :: header}"></div>
+		</div>
+
+		<div class="row-fluid">
+
+			<div class="all col-xs-2" th:insert="admin/partial/leftBar :: leftBar"></div>
+
+			<div class="col-xs-10" >
+				<div class="container-fluid" style="margin-left:-15px;margin-right:-15px;">
+					<div class="row-fluid" style="margin-left:-15px;margin-right:-15px;">
+					<div class="col-xs-12" style="margin-left:-15px;margin-right:-15px;">
+							<ul class="nav nav-tabs">
+								<!-- <li><a th:href="@{/userList}">人员列表</a></li> -->
+								<li class="active"><a href="#">基础信息</a></li>
+								
+								<!-- <li class="dropdown pull-right"><a href="#"
+									data-toggle="dropdown" class="dropdown-toggle">下拉<strong
+										class="caret"></strong></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">操作</a></li>
+										<li><a href="#">设置栏目</a></li>
+										<li><a href="#">更多设置</a></li>
+										<li class="divider"></li>
+										<li><a href="#">分割线</a></li>
+									</ul></li> -->
+							</ul>
+					</div>
+					</div>
+					
+					<div class="row-fluid" style="margin-left:-15px;margin-right:-15px;">
+						<div class="col-xs-12" style="margin-left:-15px;margin-right:-15px;">
+							<br/>
+							<form id="commentForm" class="form-horizontal" role="form" th:action="@{/gencode/download}" method="post">
+								 <div class="form-group">
+								      <label class="col-xs-2 control-label">表名</label>
+								      <div class="col-xs-4">
+								         <input class="form-control required" type="text" 
+								            name="tableName" th:value="${tableName}" readonly="readonly"/>
+								      </div>
+								 </div>
+								 <div class="form-group">
+								      <label class="col-xs-2 control-label">基础包名</label>
+								      <div class="col-xs-4">
+								         <input class="form-control required" type="text"
+								            name="basePackage" th:filed="${config.basePackage}"/>
+								      </div>
+								 </div>
+								 <div class="form-group">
+								      <label class="col-xs-2 control-label">模块名</label>
+								      <div class="col-xs-4">
+								         <input class="form-control required" type="text"
+								            name="moduleName" th:filed="${config.moduleName}"/>
+								      </div>
+								 </div>
+								 <div class="form-group">
+								      <label class="col-xs-2 control-label">作者</label>
+								      <div class="col-xs-4">
+								         <input class="form-control required" type="text" 
+								            name="author" th:filed="${config.author}"/>
+								      </div>
+								 </div>
+								 <div class="form-group">
+								      <label class="col-xs-2 control-label email">邮箱</label>
+								      <div class="col-xs-4">
+								         <input class="form-control required" type="email" 
+								            name="email" th:filed="${config.email}"/>
+								      </div>
+								 </div>
+							
+								 <div class="form-group">
+								      <div class="col-xs-offset-2 col-sm-10">
+								         <button type="submit" class="btn btn-primary">提交生成</button>
+								      </div>
+								   </div>
+							</form>
+					</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(
+			function(){
+				$('#commentForm').validate();	
+			}	
+		);
+	</script>
+</body>
+</html>

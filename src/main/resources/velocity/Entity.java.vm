@@ -1,0 +1,68 @@
+package ${package}.${moduleName}.model;
+
+import javax.validation.constraints.NotBlank;
+import com.heyu.framework.model.DataEntity;
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+
+public class ${className} extends DataEntity<${className}>{
+
+	private static final long serialVersionUID = 1L;
+#foreach ($column in $columns)
+	/**
+	 * $column.comment
+	 */
+	#if( $column.attrname == 'id' )
+		
+	#elseif( $column.attrname == 'remark' )
+		
+	#elseif( $column.attrname == 'createDate' )
+		
+	#elseif( $column.attrname == 'updateDate' )
+		
+	#elseif( $column.attrname == 'delFlag' )
+		
+	#elseif( $column.attrname == 'createBy' )
+		
+	#elseif( $column.attrname == 'updateBy' )
+		
+	#else 
+	
+	private $column.attrType $column.attrname;
+	#end
+#end
+	
+#foreach ($column in $columns)
+	#if( $column.attrname == 'id' )
+		
+	#elseif( $column.attrname == 'remark' )
+		
+	#elseif( $column.attrname == 'createDate' )
+		
+	#elseif( $column.attrname == 'updateDate' )
+		
+	#elseif( $column.attrname == 'delFlag' )
+		
+	#elseif( $column.attrname == 'createBy' )
+		
+	#elseif( $column.attrname == 'updateBy' )
+		
+	#else
+	/**
+	 * ${column.comment}
+	 */
+	public $column.attrType get${column.attrName}() {
+		return $column.attrname;
+	}
+	
+	/**
+	 * ${column.comments}
+	 */
+	public void set${column.attrName}($column.attrType $column.attrname) {
+		this.$column.attrname = $column.attrname;
+	}
+	#end
+#end
+	
+}

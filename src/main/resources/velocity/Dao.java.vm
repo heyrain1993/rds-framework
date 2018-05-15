@@ -1,0 +1,10 @@
+package ${package}.${moduleName}.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.heyu.framework.dao.CurdDao;
+import ${package}.${moduleName}.model.${className};
+
+@Mapper
+public interface ${className}Dao extends CurdDao<${className}>{
+}

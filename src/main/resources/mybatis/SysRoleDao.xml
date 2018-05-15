@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heyu.framework.dao.SysRoleDao">
+    <sql id="Base_Column_List">
+  	  	sy.id AS id,
+    	  	sy.name AS name,
+    	  	sy.type AS type,
+    	  	sy.create_by AS createBy,
+    	  	sy.create_date AS createDate,
+    	  	sy.update_by AS updateBy,
+    	  	sy.update_date AS updateDate,
+    	  	sy.remark AS remark,
+    	  	sy.del_flag AS delFlag
+    	
+  </sql>
+  
+  <select id="findById" parameterType="java.lang.String" resultType="com.heyu.framework.model.SysRole">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role sy
+    where sy.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findAll" resultType="com.heyu.framework.model.SysRole">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role sy
+  </select>
+
+  <select id="findList" resultType="com.heyu.framework.model.SysRole">
+    select
+    <include refid="Base_Column_List" />
+    from sys_role sy
+
+  </select>
+  
+  
+  <select id="findAllList" resultType="com.heyu.framework.model.SysRole">
+    select
+    <include refid="Base_Column_List" />
+    from sys_role sy
+
+  </select>
+  
+  
+  <delete id="delete" parameterType="java.lang.String">
+    delete from sys_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteBatch">
+    delete from sys_role
+    where id IN
+   <foreach item="item" index="index" collection="list"
+      open="(" separator="," close=")">
+        #{item}
+  </foreach>
+  </delete>
+  
+  <insert id="insert" parameterType="com.heyu.framework.model.SysRole">
+    insert into sys_role (	
+    	id,
+        	name,
+        	type,
+        	create_by,
+        	create_date,
+        	update_by,
+        	update_date,
+        	remark,
+        	del_flag
+            	)
+    values (
+			#{id},
+        		#{name},
+        		#{type},
+        		#{createBy},
+        		#{createDate},
+        		#{updateBy},
+        		#{updateDate},
+        		#{remark},
+        		#{delFlag}
+        )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.heyu.framework.model.SysRole">
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="id != null">
+        id,
+      </if>
+          <if test="name != null">
+        name,
+      </if>
+          <if test="type != null">
+        type,
+      </if>
+          <if test="createBy != null">
+        create_by,
+      </if>
+          <if test="createDate != null">
+        create_date,
+      </if>
+          <if test="updateBy != null">
+        update_by,
+      </if>
+          <if test="updateDate != null">
+        update_date,
+      </if>
+          <if test="remark != null">
+        remark,
+      </if>
+          <if test="delFlag != null">
+        del_flag,
+      </if>
+        </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+           <if test="id != null">
+        #{id},
+      </if>
+           <if test="name != null">
+        #{name},
+      </if>
+           <if test="type != null">
+        #{type},
+      </if>
+           <if test="createBy != null">
+        #{createBy},
+      </if>
+           <if test="createDate != null">
+        #{createDate},
+      </if>
+           <if test="updateBy != null">
+        #{updateBy},
+      </if>
+           <if test="updateDate != null">
+        #{updateDate},
+      </if>
+           <if test="remark != null">
+        #{remark},
+      </if>
+           <if test="delFlag != null">
+        #{delFlag},
+      </if>
+         </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.heyu.framework.model.SysRole">
+    update sys_role
+    <set>
+              <if test="id != null">
+        id = #{id},
+      </if>
+        
+	          <if test="name != null">
+        name = #{name},
+      </if>
+        
+	          <if test="type != null">
+        type = #{type},
+      </if>
+        
+	        
+        
+	            
+	          <if test="updateBy != null">
+        update_by = #{updateBy},
+      </if>
+        
+	          <if test="updateDate != null">
+        update_date = #{updateDate},
+      </if>
+        
+	          <if test="remark != null">
+        remark = #{remark},
+      </if>
+        
+	          <if test="delFlag != null">
+        del_flag = #{delFlag},
+      </if>
+        
+	    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="update" parameterType="com.heyu.framework.model.SysRole">
+    update sys_role
+    set 
+          
+          id = #{id},
+              
+       
+	     
+          name = #{name},
+              
+       
+	     
+          type = #{type},
+              
+       
+	     
+         
+         
+       
+	     
+              
+       
+	     
+          update_by = #{updateBy},
+              
+       
+	     
+          update_date = #{updateDate},
+              
+       
+	     
+          remark = #{remark},
+              
+       
+	     
+          del_flag = #{delFlag}
+              
+       
+	    where id = #{id,jdbcType=VARCHAR}
+  </update>
+ </mapper>

@@ -18,13 +18,6 @@ public interface CurdDao<T> {
 	public T findById(@Param(value="id")String id);
 
 	/**
-	 * 查询实体
-	 * @param entity
-	 * @return
-	 */
-	public T find(T entity);
-
-	/**
 	 * 查询实体列表-分页
 	 * @param entity
 	 * @return
@@ -60,10 +53,10 @@ public interface CurdDao<T> {
 
 	/**
 	 * 删除实体
-	 * @param entity
+	 * @param id
 	 * @return
 	 */
-	public int delete(T entity);
+	public int delete(@Param(value="id")String id);
 
 	/**
 	 * 根据ids批量删除实体

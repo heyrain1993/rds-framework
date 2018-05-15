@@ -1,0 +1,103 @@
+package ${package}.${moduleName}.controller;
+
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.heyu.framework.controller.BaseController;
+import com.heyu.framework.model.Page;
+import ${package}.${moduleName}.model.${className};
+import ${package}.${moduleName}.service.${className}Service;
+/**
+ * ${comments}
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ *
+ */
+@Controller
+@RequestMapping(value="${moduleName}/${classname}")
+public class ${className}Controller extends BaseController{
+	
+	@Autowired
+	private ${className}Service ${classname}Service;
+	
+	@RequestMapping()
+	public String get(@RequestParam(value="id")String id,Model model) {
+		${className} ${classname} = ${classname}Service.findById(id);
+		model.addAttribute("${classname}", ${classname});
+		return "${moduleName}/${classname}Form";
+	}
+	
+	/**
+	 * 根据条件分页查询
+	 * @param request 请求
+	 * @param response 响应
+	 * @param ${classname} 实体类
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="list",method=RequestMethod.GET)
+	public String list(HttpServletRequest request,HttpServletResponse response,${className} ${classname},Model model){
+		Page<${className}> page = new Page<${className}>(request);
+		Page<${className}> result = ${classname}Service.findPage(page,${classname});
+		model.addAttribute("page", result);
+		return "${moduleName}/${classname}List";
+	}
+	
+	/**
+	 * 根据条件查询所有
+	 * @param ${classname} 实体类
+	 * @return
+	 */
+	@RequestMapping(value = "findAll",method=RequestMethod.POST)
+	@ResponseBody
+	public List<${className}> findAll(${className} ${classname}){
+		List<${className}> lists = ${classname}Service.findList(${classname});
+		return lists;
+	}
+	
+	/**
+	 * 根据id查询实体类
+	 * @param id 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="form",method=RequestMethod.GET)
+	public String form(Model model) {
+		${className} ${classname} = new ${className}();
+
+		model.addAttribute("${classname}",${classname});
+		return "${moduleName}/${classname}Form";
+	}
+	
+	/**
+	 * 保存-使用validate校验
+	 * @param ${classname}
+	 * @return
+	 */
+	@RequestMapping(value="save",method=RequestMethod.POST)
+	public String save(${className} ${classname}) {
+
+		${classname}Service.save(${classname});
+		return "redirect:/${moduleName}/${classname}/list";
+	}
+	
+	/**
+	 * 删除实体类
+	 * @param ${classname}
+	 * @return
+	 */
+	@RequestMapping(value="delete",method=RequestMethod.GET)
+	public String delete(@RequestParam(value="id")String id) {
+		${classname}Service.delete(id);
+		return "redirect:/${moduleName}/${classname}/list";
+	}
+	
+}

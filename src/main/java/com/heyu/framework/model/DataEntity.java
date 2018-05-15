@@ -19,6 +19,10 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	
 	protected Date createDate;//创建时间
 	
+	protected  String createBy;
+	
+	protected String updateBy;
+	
 	protected Date updateDate;//更新时间
 
 	@JsonIgnore
@@ -58,6 +62,23 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 		this.updateDate = updateDate;
 	}
 	
+	
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
 	public DataEntity() {
 		super();
 		this.delFlag = DEL_FLAG_NORMAL; 
