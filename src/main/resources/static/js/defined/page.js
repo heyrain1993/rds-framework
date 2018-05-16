@@ -2,11 +2,18 @@
  * 分页功能js
  */
 $(function () {
+	var pageUrl = [[${page.url}]];
+	var pageNo = [[${page.pageNo}]];
+	var pageSize = [[${page.pageSize}]];
+	var totalRecord = [[${page.totalRecord}]];
+	var totalPage = [[${page.totalPage}]];
+	$('#totalRecord').text(totalRecord);
+	$('#totalPage').text(totalPage);
     var options={
         alignment:'center',
-        currentPage:'1',
+        currentPage:pageNo,
         numberOfPages:'5',
-        totalPages:'10',
+        totalPages:totalPage,
         bootstrapMajorVersion:'3',
         shouldShowPage:true,
         itemTexts: function(type,page,current){
@@ -27,6 +34,12 @@ $(function () {
         	if(type == "page"){
         		return (page === current)? "active" :"";
         	}
+        },
+        onPageClicked:function(event, originalEvent, type, page){
+        	$.ajax({
+        		url:pageUrl + "?pageNo="+page,
+        		type:"GET"
+        	});
         }
     };
     $('#page').bootstrapPaginator(options);

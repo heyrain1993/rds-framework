@@ -43,11 +43,12 @@ public class ${className}Controller extends BaseController{
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="list",method=RequestMethod.GET)
+	@RequestMapping(value="list")
 	public String list(HttpServletRequest request,HttpServletResponse response,${className} ${classname},Model model){
 		Page<${className}> page = new Page<${className}>(request);
 		Page<${className}> result = ${classname}Service.findPage(page,${classname});
 		model.addAttribute("page", result);
+		model.addAttribute("${classname}", ${classname});
 		return "${moduleName}/${classname}List";
 	}
 	

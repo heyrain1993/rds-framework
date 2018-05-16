@@ -12,13 +12,15 @@ public class Page<T> {
 
     private Integer pageNo = 1;//当前页
 
-    private Integer pageSize = 15;//每页条数
+    private Integer pageSize = 1;//每页条数
 
     private Boolean useFlag = true;//是否使用分页
 
     private Boolean checkFlag;//检查当前页码是否合法(大于最大页或小于最小页都不合法)
 
     private Integer totalRecord;//总记录数
+    
+    private String url;
 
     private Integer totalPage;//总页数
 
@@ -31,10 +33,14 @@ public class Page<T> {
     	if(request != null) {
     		String pageNo = request.getParameter("pageNo");
     		String pageSize = request.getParameter("pageSize");
-    		if(!StringUtils.isEmpty(pageNo) && StringUtils.isEmpty(pageSize)) {
+    		if(!StringUtils.isEmpty(pageNo) ) {
     			this.setPageNo(Integer.parseInt(pageNo));
-    			this.setPageSize(Integer.parseInt(pageSize));
     		}
+    		if(!StringUtils.isEmpty(pageSize)) {
+    			this.setPageSize(Integer.parseInt(pageSize));
+    			
+    		}
+    		this.setUrl(request.getRequestURI());
     	}
 	}
 
@@ -102,4 +108,12 @@ public class Page<T> {
         int totalPage = totalRecord % pageSize == 0 ? totalRecord / pageSize : totalRecord / pageSize + 1;
         this.setTotalPage(totalPage);
     }
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

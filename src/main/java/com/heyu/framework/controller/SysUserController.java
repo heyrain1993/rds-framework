@@ -43,7 +43,7 @@ public class SysUserController extends BaseController{
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="list",method=RequestMethod.GET)
+	@RequestMapping(value="list")
 	public String list(HttpServletRequest request,HttpServletResponse response,SysUser sysUser,Model model){
 		Page<SysUser> page = new Page<SysUser>(request);
 		Page<SysUser> result = sysUserService.findPage(page,sysUser);

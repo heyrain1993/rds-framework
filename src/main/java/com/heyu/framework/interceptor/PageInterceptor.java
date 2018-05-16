@@ -75,7 +75,7 @@ public class PageInterceptor implements Interceptor {
             String sql = boundSql.getSql();
 
             ////给当前的page参数对象设置总记录数
-           this.setTotalRecord(page,mappedStatement, connection);
+           this.setTotalRecord(paramters,page,mappedStatement, connection);
 
             //获取分页Sql语句
             String pageSql = this.getPageSql(page, sql);
@@ -138,14 +138,14 @@ public class PageInterceptor implements Interceptor {
 
     /**
      * 给当前page对象设置总记录数
-     * @param page Mapper映射语句对应的参数对象
+     * @param paramters 
      * @param mappedStatement Mapper映射语句
      * @param connection 当前数据库连接
      */
-    private void setTotalRecord(Page<?> page, MappedStatement mappedStatement, Connection connection) {
+    private void setTotalRecord(Object paramters,Page<?> page, MappedStatement mappedStatement, Connection connection) {
         //获取对应的BoundSql，这个BoundSql其实跟我们利用StatementHandler获取到的BoundSql是同一个对象。
         //delegate里面的boundSql也是通过mappedStatement.getBoundSql(paramObj)方法获取到的。
-        BoundSql boundSql = mappedStatement.getBoundSql(page);
+        BoundSql boundSql = mappedStatement.getBoundSql(paramters);
 
         //获取到我们自己写在Mapper映射语句中对应的Sql语句
         String sql = boundSql.getSql();
@@ -158,10 +158,10 @@ public class PageInterceptor implements Interceptor {
 
         //利用Configuration、查询记录数的Sql语句countSql、
         // 参数映射关系parameterMappings和参数对象page建立查询记录数对应的BoundSql对象。
-        BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql, parameterMappings, page);
+        BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql, parameterMappings, paramters);
 
         //通过mappedStatement、参数对象page和BoundSql对象countBoundSql建立一个用于设定参数的ParameterHandler对象
-        ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, page, countBoundSql);
+        ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, paramters, countBoundSql);
 
         //通过connection建立一个countSql对应的PreparedStatement对象。
         PreparedStatement pstmt = null;
