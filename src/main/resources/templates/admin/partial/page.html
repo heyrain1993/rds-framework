@@ -86,8 +86,11 @@
 	        		type:"GET",
 	        		dataType:"html",
 	        		success:function(data){
+	        		    console.log(data);
 	        			var response = $(data).find('#content').html();
-	        			$('#content').html(response);
+	        			console.log(response);
+	        			console.log("page");
+	        			$('#iframepage').html(response);
 	        		}
 	        	});
 	        },
@@ -98,7 +101,7 @@
 	        		dataType:"html",
 	        		success:function(data){
 	        			var response = $(data).find('#content').html();
-	        			$('#content').html(response);
+	        			$('#iframepage').html(response);
 	        		}
 	        	});
 	        }
