@@ -30,17 +30,17 @@
 
 	<!--bootstrap-paginator分页插件-->
 	<div th:fragment="page" class="form-inline">
-		<div class="pull-left">
-			<ul id="page" class="pagination">
-				
+			<ul id="page" class="pagination" style="padding-left: 30px;">
+
 	        </ul>
-		</div>
-       <ul class="pagination list-inline pull-left" id="total">
+		<!--<div class="pull-left">
+		</div>-->
+       <!--<ul class="pagination list-inline pull-left" id="total">
 			<li><span style="border-top-right-radius: 4px;border-bottom-right-radius: 4px;" id="totalRecord">共368条数据</span></li>
 			<li><span style="border-top-right-radius: 4px;border-bottom-right-radius: 4px;" id="totalPage">共37页</span></li>
 			<li><input id="pageNo" class="form-control" style="width:80px;" placeholder="页码"/></li>
 			<li><input class="btn btn-danger" type="button" onclick="openPage()" value="确定" />  </li>
-        </ul>
+        </ul>-->
        	
 	<script th:inline="javascript">
 	$(function () {
@@ -81,7 +81,12 @@
 	        	}
 	        },
 	        onPageClicked:function(event, originalEvent, type, page){
-	        	$.ajax({
+	            if(page == pageNo){
+	                return false;
+				}
+	        	location.href = pageUrl + "?pageNo="+page;
+	        	return false;
+	            /*$.ajax({
 	        		url:pageUrl + "?pageNo="+page,
 	        		type:"GET",
 	        		dataType:"html",
@@ -92,23 +97,12 @@
 	        			console.log("page");
 	        			$('#iframepage').html(response);
 	        		}
-	        	});
-	        },
-	        onPageChanged:function(event, oldPage, newPage){
-	        	$.ajax({
-	        		url:pageUrl + "?pageNo="+newPage,
-	        		type:"GET",
-	        		dataType:"html",
-	        		success:function(data){
-	        			var response = $(data).find('#content').html();
-	        			$('#iframepage').html(response);
-	        		}
-	        	});
+	        	});*/
 	        }
 	    };
 	    $('#page').bootstrapPaginator(options);
 	});
-	function openPage(){
+	/*function openPage(){
 		var str = $('#totalRecord').text();
 		var totalRecord = str.replace(/[^0-9]/ig,"");
 		var str2 = $('#totalPage').text();
@@ -118,8 +112,8 @@
 			pageNo = totalPage;
 		}
 		$('#page').bootstrapPaginator("show",pageNo);
-
-	}
+		location.href = pageUrl + "?pageNo="+pageNo;
+	}*/
 	</script>
 	</div>
 </body>

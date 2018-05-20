@@ -36,19 +36,41 @@
 	</nav>
 		<div class="container-fluid" >
 			<div class="col-xs-2" style="margin-left: -15px;margin-right: -15px;">
-				<ul class="nav nav-tabs nav-stacked">
-					<li>
-						<a href="#sysSetting" class="nav-header collapse" data-toggle="collapse">
+				<div class="panel-group table-responsive" role="tablist">
+					<!--折叠菜单开始-->
+					<div class="panel-primary panel ">
+						<!--折叠菜单头部-->
+						<div class="panel-heading" data-toggle="collapse" data-th-target="#sysSetting">
 							系统管理<span class="pull-right glyphicon glyphicon-chevron-down"></span>
-						</a>
-						<ul id="sysSetting" class="nav nav-list collapse">
-							<li><a href="#" onclick="menuClick('framework/sysUser/list')" class="active">用户管理</a></li>
-							<li><a href="#" onclick="menuClick('framework/sysRole/list')">角色管理</a></li>
-						</ul>
-					</li>
-					<li ><a href="#" onclick="menuClick('gencode/tables')">数据表</a></li>
-					<li><a href="#">代码生成</a></li>
-				</ul>
+						</div>
+						<!--折叠菜单身体-->
+						<div id="sysSetting" class="panel-collapse collapse in" role="tabpanel">
+							<ul class="list-group">
+								<li class="list-group-item">
+									<a href="#" onclick="menuClick('framework/sysUser/list')" class="active">用户管理</a>
+								</li>
+								<li class="list-group-item">
+									<a href="#" onclick="menuClick('framework/sysRole/list')">角色管理</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="panel-primary panel ">
+						<!--折叠菜单头部-->
+						<div class="panel-heading" data-toggle="collapse">
+							<a href="#" onclick="menuClick('gencode/tables')">数据表</a></span>
+						</div>
+
+					</div>
+					<div class="panel-primary panel ">
+						<!--折叠菜单头部-->
+						<div class="panel-heading" data-toggle="collapse">
+							<a href="#">代码生成</a></span>
+						</div>
+
+					</div>
+
+				</div>
 			</div>
 
 			<div class="col-xs-10 row-padding" style="margin-left: -15px;margin-right: -15px;">

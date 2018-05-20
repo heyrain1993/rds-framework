@@ -84,19 +84,19 @@
         	del_flag
             	)
     values (
-			id,
-        		realName,
-        		username,
-        		password,
-        		portrait,
-        		salt,
-        		email,
-        		phone,
-        		createBy,
-        		createDate,
-        		updateBy,
-        		updateDate,
-        		remark,
+			#{id},
+        		#{realName},
+        		#{username},
+        		#{password},
+        		#{portrait},
+        		#{salt},
+        		#{email},
+        		#{phone},
+        		#{createBy},
+        		#{createDate},
+        		#{updateBy},
+        		#{updateDate},
+        		#{remark},
         		#{delFlag}
         )
   </insert>

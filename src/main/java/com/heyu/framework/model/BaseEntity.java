@@ -49,7 +49,7 @@ public abstract class BaseEntity<T> implements Serializable {
 		isNewRecord = newRecord;
 	}
 
-	@Length(min = 32,max = 64)
+	@Length(min = 1,max = 64)
 	public String getId() {
 		return id;
 	}
