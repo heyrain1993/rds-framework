@@ -10,7 +10,17 @@
 <link th:href="@{/css/defined.css}" rel="stylesheet"/>
 <script type="text/javascript" th:src="@{/js/bootstrap/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/paginator/bootstrap-paginator.js}"></script>
-
+	<style type="text/css">
+		.left-menu{
+			cursor: pointer;
+		}
+		.left-menu:hover{
+			background:#C4E3F3;
+		}
+		.left-menu:active{
+			background:#C4E3F3!important;
+		}
+	</style>
 </head>
 
 <body>
@@ -36,36 +46,39 @@
 	</nav>
 		<div class="container-fluid" >
 			<div class="col-xs-2" style="margin-left: -15px;margin-right: -15px;">
-				<div class="panel-group table-responsive" role="tablist">
+				<div class="panel-group table-responsive" role="tablist" id="accordion">
 					<!--折叠菜单开始-->
 					<div class="panel-primary panel ">
 						<!--折叠菜单头部-->
-						<div class="panel-heading" data-toggle="collapse" data-th-target="#sysSetting">
+						<div class="panel-heading" data-toggle="collapse" data-target="#sysSetting" role="tab" data-parent="#accordion">
 							系统管理<span class="pull-right glyphicon glyphicon-chevron-down"></span>
 						</div>
 						<!--折叠菜单身体-->
 						<div id="sysSetting" class="panel-collapse collapse in" role="tabpanel">
 							<ul class="list-group">
-								<li class="list-group-item">
-									<a href="#" onclick="menuClick('framework/sysUser/list')" class="active">用户管理</a>
+								<li class="list-group-item left-menu" onclick="menuClick('framework/sysUser/list')">
+									用户管理
 								</li>
-								<li class="list-group-item">
-									<a href="#" onclick="menuClick('framework/sysRole/list')">角色管理</a>
+								<li class="list-group-item left-menu" onclick="menuClick('framework/sysRole/list')">
+									角色管理
 								</li>
 							</ul>
 						</div>
 					</div>
 					<div class="panel-primary panel ">
 						<!--折叠菜单头部-->
-						<div class="panel-heading" data-toggle="collapse">
-							<a href="#" onclick="menuClick('gencode/tables')">数据表</a></span>
+						<div class="panel-heading" data-toggle="collapse" data-target="#genCode" role="tab" data-parent="#accordion">
+							代码生成<span class="pull-right glyphicon glyphicon-chevron-down"></span>
 						</div>
-
-					</div>
-					<div class="panel-primary panel ">
-						<!--折叠菜单头部-->
-						<div class="panel-heading" data-toggle="collapse">
-							<a href="#">代码生成</a></span>
+						<div id="genCode" class="panel-collapse collapse" role="tabpanel">
+							<ul class="list-group">
+								<li class="list-group-item left-menu" onclick="menuClick('gencode/tables')">
+									数据表
+								</li>
+								<li class="list-group-item left-menu" onclick="menuClick('gencode/tables')">
+									数据表
+								</li>
+							</ul>
 						</div>
 
 					</div>
@@ -86,8 +99,10 @@
 		console.log(ctxPath);
 		function menuClick(path){
 			var url = ctxPath+path;
+           /* $('.left-menu').removeClass("active");*/
+            $(this).css("background-color","#C4E3F3!important");
 			$('#iframepage').attr('src',url);
-			return false;
+
 		}
 
         function changeFrameHeight(){
