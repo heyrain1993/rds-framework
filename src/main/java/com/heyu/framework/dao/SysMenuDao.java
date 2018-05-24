@@ -7,4 +7,6 @@ import com.heyu.framework.model.SysMenu;
 
 @Mapper
 public interface SysMenuDao extends TreeDao<SysMenu>{
+
+    public int updateByPrimaryKeySelective(SysMenu sysMenu);
 }

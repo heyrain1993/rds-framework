@@ -51,7 +51,7 @@
   
   <delete id="delete" parameterType="java.lang.String">
     delete from sys_menu
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id} or parent_ids like concat('%',concat(#{id},'%'))
   </delete>
   
   <delete id="deleteBatch">
@@ -217,11 +217,11 @@
         url = #{url},
       </if>
         
-	          <if test="parentId != null">
+	          <if test="parentId != null and parentId != ''">
         parent_id = #{parentId},
       </if>
         
-	          <if test="parentIds != null">
+	          <if test="parentIds != null and parentIds != ''">
         parent_ids = #{parentIds},
       </if>
         
@@ -248,7 +248,7 @@
         update_date = #{updateDate},
       </if>
         
-	          <if test="remark != null">
+	          <if test="remark != null and remark != '' ">
         remark = #{remark},
       </if>
         

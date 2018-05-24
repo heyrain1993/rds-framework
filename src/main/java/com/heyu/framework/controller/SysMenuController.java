@@ -3,6 +3,9 @@ package com.heyu.framework.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.heyu.framework.exception.PageException;
+import com.heyu.framework.utils.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,14 +70,14 @@ public class SysMenuController extends BaseController{
 	
 	/**
 	 * 根据id查询实体类
-	 * @param id 
+	 * @param parentId
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="form",method=RequestMethod.GET)
-	public String form(Model model) {
+	public String form(@RequestParam(value = "parentId",required = false)String parentId, Model model) {
 		SysMenu sysMenu = new SysMenu();
-
+		sysMenu.setParentId(parentId);
 		model.addAttribute("sysMenu",sysMenu);
 		return "framework/sysMenuForm";
 	}
@@ -86,14 +89,18 @@ public class SysMenuController extends BaseController{
 	 */
 	@RequestMapping(value="save",method=RequestMethod.POST)
 	public String save(SysMenu sysMenu) {
-
-		sysMenuService.save(sysMenu);
+		try {
+			sysMenuService.save(sysMenu);
+		}catch (Exception e){
+			e.printStackTrace();
+			throw new PageException(e.getMessage());
+		}
 		return "redirect:/framework/sysMenu/list";
 	}
 	
 	/**
 	 * 删除实体类
-	 * @param sysMenu
+	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value="delete",method=RequestMethod.GET)

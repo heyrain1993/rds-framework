@@ -3,6 +3,7 @@ package com.heyu.framework.service;
 import java.util.List;
 
 import com.heyu.framework.utils.JsonUtils;
+import com.heyu.framework.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +70,24 @@ public class SysMenuService extends TreeService<SysMenu>{
 	 * @return
 	 */
 	public int save(SysMenu sysMenu) {
+		SysMenu parent = new SysMenu();
+		/*
+		创建顶级菜单：id&parentId为空，parentId直接赋值为0
+		创建次级菜单：id为空，parentId不为空，parentId赋值为parent的id+parentIds
+		修改时：id不为空，parentId和parentIds不需要更新
+		 */
+		if(sysMenu != null && !StringUtils.isEmpty(sysMenu.getParentId()) && StringUtils.isEmpty(sysMenu.getId())){//创建子级菜单
+			parent = this.sysMenuDao.findById(sysMenu.getParentId());
+			if(parent != null && parent.getParentIds() != null){
+				sysMenu.setParentIds(parent.getParentIds() + "," + parent.getParentId());
+			}else{
+				sysMenu.setParentIds(sysMenu.getParentId());
+			}
+		}else if(sysMenu != null && StringUtils.isEmpty(sysMenu.getParentId())){//创建顶级菜单
+			sysMenu.setParentId("0");
+		}else{
+
+		}
 		if(sysMenu.isNewRecord()){
 			sysMenu.preInsert();
 			ValidatorUtil.validateEntity(sysMenu);
@@ -77,7 +96,7 @@ public class SysMenuService extends TreeService<SysMenu>{
 		}else{
 			sysMenu.preUpdate();
 			ValidatorUtil.validateEntity(sysMenu);
-			return this.sysMenuDao.update(sysMenu);
+			return this.sysMenuDao.updateByPrimaryKeySelective(sysMenu);
 		}
 	}
 
