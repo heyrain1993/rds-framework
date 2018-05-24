@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{/images/favicon.ico}"/>
+    <script type="text/javascript" th:src="@{/js/jquery/jquery.js}"></script>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/jquery-validation/dist/jquery.validate.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/bootstrap/css/bootstrap.min.css}"/>
+    <link th:href="@{/css/defined.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/paginator/bootstrap-paginator.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-treegrid/css/jquery.treegrid.css}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-treegrid/js/jquery.treegrid.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-treegrid/js/jquery.treegrid.bootstrap3.js}"></script>
+    <title>快速开发平台</title>
+
+</head>
+<body>
+<div id="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#">菜单列表</a></li>
+                    <li><a th:href="@{/framework/sysMenu/form}">菜单增加</a></li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="col-xs-12">
+                <form class="form-inline" style="margin-top:20px;margin-buttom:20px;" role="form"
+                      th:action="@{/framework/sysRole/list}" method="post">
+                    <div class="form-group">
+                        <label class="control-label">id</label>
+                        <input type="text" class="form-control" name="id" th:value="${sysMenu.id}">
+                    </div>
+                    <button type="submit" class="btn btn-default">查询</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <!--<table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>主键</th>
+                        <th>菜单名称</th>
+                        <th>资源类型</th>
+                        <th>创建时间</th>
+                        <th class="text-center">操作</th>
+                    </tr>
+                    </thead>
+                    &lt;!&ndash;<tbody>
+                    <tr th:each="sysMenu: ${page.list}">
+                        <td th:text="${sysMenu.id}">1</td>
+                        <td th:text="${sysMenu.name}">1</td>
+                        <td th:text="${sysMenu.type}">1</td>
+                        <td
+                                th:text="${#dates.format( sysMenu.createDate ,'yyyy-MM-dd HH:mm:ss')}">Default
+                        </td>
+                        <td>
+                            <a type="button" class="btn btn-sm btn-primary"
+                               th:href="@{'/framework/sysMenu?id=' + ${sysMenu.id}}">详情</a>
+                            <a type="button" class="btn btn-sm btn-danger"
+                               th:href="@{'/framework/sysMenu/delete?id=' + ${sysMenu.id}}">删除</a>
+                        </td>
+                    </tr>
+
+                    </tbody>&ndash;&gt;
+                    <tbody th:include="this::row(${list})"/>table-bordered table-striped table-condensed
+                </table>-->
+                <table class="table tree-2 table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>菜单名称</th>
+                        <th>资源类型</th>
+                        <th>创建时间</th>
+                        <th class="text-center">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr class="treegrid-1">
+                        <td>Root node 1</td><td>Additional info</td>
+                    </tr>
+                    <tr class="treegrid-2 treegrid-parent-1" data-tt>
+                        <td>Node 1-1</td><td>Additional info</td>
+                    </tr>
+                    <tr class="treegrid-3 treegrid-parent-1">
+                        <td>Node 1-2</td><td>Additional info</td>
+                    </tr>
+                    <tr class="treegrid-4 treegrid-parent-3">
+                        <td>Node 1-2-1</td><td>Additional info</td>
+                    </tr>
+                    <tr class="treegrid-5">
+                        <td>Root node 2</td><td>Additional info</td>
+                    </tr>
+                    <tr class="treegrid-6 treegrid-parent-5">
+                        <td>Node 2-1</td><td>Additional info</td>
+                    </tr>
+                    <tr class="treegrid-7 treegrid-parent-5">
+                        <td>Node 2-2</td><td>Additional info</td>
+                    </tr>
+                    <tr class="treegrid-8 treegrid-parent-7">
+                        <td>Node 2-2-1</td><td>Additional info</td>
+                    </tr>-->
+                    </tbody>
+
+                </table>
+
+                <table id="tg"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row-fluid" th:insert="~{admin/partial/page :: page}">
+</div>-->
+
+</body>
+<script th:inline="javascript">
+    $(function () {
+        var treeTR = '';
+        var list = JSON.stringify([[${list}]]);
+        var json = JSON.parse(list);
+        for(var i = 0; i < json.length; i++){
+            treeTR += "<tr class='treegrid-" + i + "'>"
+            /*for(var key in json[i]){
+                if(key == "name" || key == "type" || key == "createDate"){
+                    treeTR += "<td>" +json[i][key]+ "</td>";
+                }
+            }*/
+            treeTR += "<td>" +json[i].name+ "</td>";
+            treeTR += "<td>" +json[i].type+ "</td>";
+            treeTR += "<td>" +json[i].createDate+ "</td>";
+            treeTR += "<td><a type='button' class='btn btn-sm btn-primary'"
+                +"th:href='@{'/framework/sysRole}>详情</a> "
+                +"<a type='button' class='btn btn-sm btn-danger' th:href='@{'/framework/sysRole/delete}>删除</a></td>";
+            treeTR += "</tr>";
+            var cc = i;
+            tree(json[i].children,cc);
+        }
+
+        $('tbody').append(treeTR);
+        $('.tree').treegrid();
+        $('.tree-2').treegrid({
+                expanderExpandedClass: 'glyphicon glyphicon-minus',
+            expanderCollapsedClass: 'glyphicon glyphicon-plus',
+            initialState:"collapsed"
+        });
+
+
+        function tree(children,cc) {
+
+            for(var j=0;j< children.length;j++){
+
+                treeTR += "<tr class='treegrid-"+cc+'-'+j+" treegrid-parent-"+cc+"'>" ;
+                /*for(var key in children[j]){
+                    if(key == "name" || key == "type" || key == "createDate"){
+                        treeTR += "<td>" +children[i][key]+ "</td>";
+                    }
+                }*/
+                treeTR += "<td>" +children[i].name+ "</td>";
+                treeTR += "<td>" +children[i].type+ "</td>";
+                treeTR += "<td>" +children[i].createDate+ "</td>";
+                treeTR += "<td><a type='button' class='btn btn-sm btn-primary'"
+                +"th:href='@{'/framework/sysRole}>详情</a> "
+                +"<a type='button' class='btn btn-sm btn-danger' th:href='@{'/framework/sysRole/delete}>删除</a></td>";
+                treeTR += "</tr>";
+                if(jQuery.isArray(children[j].children)){
+                    cc=cc + "-" + j;
+                    //递归遍历所有的子节点
+                    tree(children[j].children,cc);
+                }
+            }
+        }
+    });
+
+</script>
+</html>
