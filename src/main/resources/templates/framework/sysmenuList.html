@@ -10,9 +10,9 @@
     <link th:href="@{/css/defined.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/bootstrap/js/bootstrap.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/paginator/bootstrap-paginator.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery-treegrid/css/jquery.treegrid.css}"></script>
     <script type="text/javascript" th:src="@{/js/jquery-treegrid/js/jquery.treegrid.js}"></script>
     <script type="text/javascript" th:src="@{/js/jquery-treegrid/js/jquery.treegrid.bootstrap3.js}"></script>
+    <script type="text/javascript" th:src="@{/js/template/template-web.js}"></script>
     <title>快速开发平台</title>
 
 </head>
@@ -80,7 +80,19 @@
                         <th class="text-center">操作</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody">
+                    <script id="temp" type="text/html">
+                        <tr class="<%=trclass%>">
+                            <td class='col-xs-4' style="<%=nameStyle%>"><%=name%></td>
+                            <td><%=type%></td>
+                            <td><%=createDate%></td>
+                            <td>
+                                <a type='button' class='btn btn-sm btn-primary' href= "<%=create%>">创建</a>
+                                <a type='button' class='btn btn-sm btn-primary' href= "<%=update%>">修改</a>
+                                <a type='button' class='btn btn-sm btn-danger' href= "<%=deleteU%>">删除</a>
+                            </td>
+                        </tr>
+                    </script>
                     <!--<tr class="treegrid-1">
                         <td>Root node 1</td><td>Additional info</td>
                     </tr>
@@ -124,24 +136,23 @@
         var basePath = /*[[@{/framework/sysMenu}]]*/;
         var create = basePath + "/form";
         var deleteUrl = basePath + "/delete";
-        var treeTR = '';
         var list = JSON.stringify([[${list}]]);
         var json = JSON.parse(list);
         for(var i = 0; i < json.length; i++){
-            treeTR += "<tr class='treegrid-" + i + "'>"
-            /*for(var key in json[i]){
-                if(key == "name" || key == "type" || key == "createDate"){
-                    treeTR += "<td>" +json[i][key]+ "</td>";
-                }
-            }*/
-            treeTR += "<td class='col-xs-4' style='text-align: left;padding-left: 25px'>" +json[i].name+ "</td>";
-            console.log(json[i]);
-            treeTR += "<td>" +json[i].type+ "</td>";
-            treeTR += "<td>" +json[i].createDate+ "</td>";
-            treeTR += "<td><a type='button' class='btn btn-sm btn-primary' href= '"+create+'?parentId='+json[i].id+"'>创建</a> "
-                +"<a type='button' class='btn btn-sm btn-primary' href= '"+basePath+'?id='+json[i].id+"'>修改</a> "
-                +"<a type='button' class='btn btn-sm btn-danger' href='"+deleteUrl+'?id='+json[i].id+"'>删除</a></td>";
-            treeTR += "</tr>";
+
+            var temJson = {};
+            temJson['trclass'] = "treegrid-"+i;
+            temJson['nameStyle'] = 'text-align: left;padding-left: 25px';
+            temJson['name'] = json[i].name;
+            temJson['type'] = json[i].type;
+            temJson['createDate'] = json[i].createDate;
+            temJson['create'] = create+'?parentId='+json[i].id;
+            temJson['update'] = basePath+'?id='+json[i].id;
+            temJson['deleteU'] = deleteUrl+'?id='+json[i].id;
+
+            var html = template('temp',temJson);
+            $('tbody').append(html);
+
             var cc = i;
             if(jQuery.isArray(json[i].children)){
 
@@ -149,10 +160,9 @@
             }
         }
 
-        $('tbody').append(treeTR);
         $('.tree').treegrid();
         $('.tree-2').treegrid({
-                expanderExpandedClass: 'glyphicon glyphicon-minus',
+            expanderExpandedClass: 'glyphicon glyphicon-minus',
             expanderCollapsedClass: 'glyphicon glyphicon-plus',
             initialState:"collapsed"
         });
@@ -161,20 +171,18 @@
         function tree(children,cc,num) {
 
             for(var j=0;j< children.length;j++){
-                console.log(children[j]);
-                treeTR += "<tr class='treegrid-"+cc+'-'+j+" treegrid-parent-"+cc+"'>" ;
-                /*for(var key in children[j]){
-                    if(key == "name" || key == "type" || key == "createDate"){
-                        treeTR += "<td>" +children[i][key]+ "</td>";
-                    }
-                }*/
-                treeTR += "<td class='col-xs-4' style='text-align:left;padding-left: "+ 25*num +"px'>" +children[j].name+ "</td>";
-                treeTR += "<td>" +children[j].type+ "</td>";
-                treeTR += "<td>" +children[j].createDate+ "</td>";
-                treeTR += "<td><a type='button' class='btn btn-sm btn-primary' href= '"+create+'?parentId='+children[j].id+"'>创建</a> "
-                    +"<a type='button' class='btn btn-sm btn-primary' href= '"+basePath+'?id='+children[j].id+"'>修改</a> "
-                    +"<a type='button' class='btn btn-sm btn-danger' href='"+deleteUrl+'?id='+children[j].id+"'>删除</a></td> ";
-                treeTR += "</tr>";
+                var temJson = {};
+                temJson['trclass'] = "treegrid-"+cc+'-'+j+" treegrid-parent-"+cc;
+                temJson['nameStyle'] = "text-align:left;padding-left: "+ 25*num +"px";
+                temJson['name'] = children[j].name;
+                temJson['type'] = children[j].type;
+                temJson['createDate'] = children[j].createDate;
+                temJson['create'] = create+'?parentId='+children[j].id;
+                temJson['update'] = basePath+'?id='+children[j].id;
+                temJson['deleteU'] = deleteUrl+'?id='+children[j].id;
+                var html = template('temp',temJson);
+                $('tbody').append(html);
+
                 if(jQuery.isArray(children[j].children)){
                     cc=cc + "-" + j;
                     //递归遍历所有的子节点
