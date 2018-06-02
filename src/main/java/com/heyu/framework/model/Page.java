@@ -12,7 +12,7 @@ public class Page<T> {
 
     private Integer pageNo = 1;//当前页
 
-    private Integer pageSize = 1;//每页条数
+    private Integer pageSize = 10;//每页条数
 
     private Boolean useFlag = true;//是否使用分页
 

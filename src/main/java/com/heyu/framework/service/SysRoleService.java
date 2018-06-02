@@ -2,6 +2,7 @@ package com.heyu.framework.service;
 
 import java.util.List;
 
+import com.heyu.framework.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -97,4 +98,12 @@ public class SysRoleService extends BaseService{
 		}
 		return true;
 	}
+
+    public List<SysRole> findByUserId(String userId) {
+		if (StringUtils.isEmpty(userId)){
+			return null;
+		}
+		return sysRoleDao.findByUserId(userId);
+
+    }
 }

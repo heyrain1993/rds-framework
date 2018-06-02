@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +47,7 @@ public class CodeGeneratorController {
 	 * @param tableName
 	 * @return
 	 */
+	@RequiresRoles("admin")
 	@RequestMapping(value = "tableInfo", method = RequestMethod.GET)
 	public String tableInfo(Model model,@RequestParam("tableName")String tableName) {
 		List<ColumnEntity> columns = codeGeneratorService.findColumnEntity(tableName);
@@ -60,6 +62,7 @@ public class CodeGeneratorController {
 	 * @param tableName
 	 * @return
 	 */
+
 	@RequestMapping(value = "tableInfo", method = RequestMethod.POST)
 	public String genCode(Model model,@RequestParam("tableName")String tableName) {
 		//List<ColumnEntity> columns = codeGeneratorService.findColumnEntity(tableName);

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.heyu.framework.exception.PageException;
+import com.heyu.framework.service.RedisService;
 import com.heyu.framework.utils.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,10 @@ import com.heyu.framework.service.SysMenuService;
 @Controller
 @RequestMapping(value="framework/sysMenu")
 public class SysMenuController extends BaseController{
-	
+
+	@Autowired
+	private RedisService redisService;
+
 	@Autowired
 	private SysMenuService sysMenuService;
 	
@@ -51,7 +55,12 @@ public class SysMenuController extends BaseController{
 		/*Page<SysMenu> page = new Page<SysMenu>(request);
 		Page<SysMenu> result = sysMenuService.findPage(page,sysMenu);
 		model.addAttribute("page", result);*/
-		List<SysMenu> list = sysMenuService.findList(sysMenu);
+		List<SysMenu> list = (List<SysMenu>) redisService.get("menulist");
+
+		if(list == null){
+			list = sysMenuService.findList(sysMenu);
+			redisService.set("menulist",list,600L);
+		}
 		model.addAttribute("list", list);
 		return "framework/sysMenuList";
 	}

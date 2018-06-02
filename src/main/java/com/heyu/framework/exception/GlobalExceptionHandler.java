@@ -25,7 +25,6 @@ public class GlobalExceptionHandler {
 	
 	/**
 	 * 页面异常处理器
-	 * @param request
 	 * @param e
 	 * @return
 	 */
@@ -37,6 +36,7 @@ public class GlobalExceptionHandler {
 		model.addObject("code", e.getCode());
 		model.addObject("msg", e.getMsg());
 		model.addObject("message",e.getMessage());
+		e.printStackTrace();
 		return model;
 	}
 	

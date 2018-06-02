@@ -65,6 +65,12 @@
 								<li class="list-group-item left-menu" onclick="menuClick('framework/sysMenu/list')">
 									菜单管理
 								</li>
+								<li class="list-group-item left-menu" onclick="menuClick('framework/sysDict/list')">
+									字典管理
+								</li>
+								<li class="list-group-item left-menu" onclick="menuClick('framework/sysPermission/list')">
+									权限管理
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -100,7 +106,7 @@
         ctxPath = /*[[@{/}]]*/ '';
         /*]]>*/
 		function menuClick(path){
-			var url = ctxPath+path;
+			var url = path;
            /* $('.left-menu').removeClass("active");*/
             $(this).css("background-color","#C4E3F3!important");
 			$('#iframepage').attr('src',url);

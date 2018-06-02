@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.heyu.framework.dao.SysRoleDao">
+<mapper namespace="com.heyu.framework.dao.SysPermissionDao">
     <sql id="Base_Column_List">
   	  	sy.id AS id,
+    	  	sy.url AS url,
     	  	sy.name AS name,
-    	  	sy.type AS type,
     	  	sy.create_by AS createBy,
     	  	sy.create_date AS createDate,
     	  	sy.update_by AS updateBy,
@@ -14,50 +14,51 @@
     	
   </sql>
   
-  <select id="findById" parameterType="java.lang.String" resultType="com.heyu.framework.model.SysRole">
+  <select id="findById" parameterType="java.lang.String" resultType="com.heyu.framework.model.SysPermission">
     select 
     <include refid="Base_Column_List" />
-    from sys_role sy
+    from sys_permission sy
     where sy.id = #{id,jdbcType=VARCHAR}
   </select>
   
-  <select id="findAll" resultType="com.heyu.framework.model.SysRole">
+  <select id="findAll" resultType="com.heyu.framework.model.SysPermission">
     select 
     <include refid="Base_Column_List" />
-    from sys_role sy
+    from sys_permission sy
   </select>
 
-  <select id="findList" resultType="com.heyu.framework.model.SysRole">
+  <select id="findList" resultType="com.heyu.framework.model.SysPermission">
     select
     <include refid="Base_Column_List" />
-    from sys_role sy
+    from sys_permission sy
 
   </select>
   
   
-  <select id="findAllList" resultType="com.heyu.framework.model.SysRole">
+  <select id="findAllList" resultType="com.heyu.framework.model.SysPermission">
     select
     <include refid="Base_Column_List" />
-    from sys_role sy
+    from sys_permission sy
 
   </select>
 
-    <select id="findByUserId" resultType="com.heyu.framework.model.SysRole">
+    <select id="findByUserId" resultType="com.heyu.framework.model.SysPermission">
         select
         <include refid="Base_Column_List" />
-        from sys_role sy left join user_role ur on sy.id = ur.rid
+        from sys_permission sy left join role_permission rp on sy.id = rp.pid
+         left join user_role  ur  on rp.rid = ur.rid
         where ur.uid = #{userId}
 
     </select>
   
   
   <delete id="delete" parameterType="java.lang.String">
-    delete from sys_role
+    delete from sys_permission
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   
   <delete id="deleteBatch">
-    delete from sys_role
+    delete from sys_permission
     where id IN
    <foreach item="item" index="index" collection="list"
       open="(" separator="," close=")">
@@ -65,11 +66,11 @@
   </foreach>
   </delete>
   
-  <insert id="insert" parameterType="com.heyu.framework.model.SysRole">
-    insert into sys_role (	
+  <insert id="insert" parameterType="com.heyu.framework.model.SysPermission">
+    insert into sys_permission (	
     	id,
+        	url,
         	name,
-        	type,
         	create_by,
         	create_date,
         	update_by,
@@ -79,8 +80,8 @@
             	)
     values (
 			#{id},
+        		#{url},
         		#{name},
-        		#{type},
         		#{createBy},
         		#{createDate},
         		#{updateBy},
@@ -90,17 +91,17 @@
         )
   </insert>
   
-  <insert id="insertSelective" parameterType="com.heyu.framework.model.SysRole">
-    insert into sys_role
+  <insert id="insertSelective" parameterType="com.heyu.framework.model.SysPermission">
+    insert into sys_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
           <if test="id != null">
         id,
       </if>
+          <if test="url != null">
+        url,
+      </if>
           <if test="name != null">
         name,
-      </if>
-          <if test="type != null">
-        type,
       </if>
           <if test="createBy != null">
         create_by,
@@ -125,11 +126,11 @@
            <if test="id != null">
         #{id},
       </if>
+           <if test="url != null">
+        #{url},
+      </if>
            <if test="name != null">
         #{name},
-      </if>
-           <if test="type != null">
-        #{type},
       </if>
            <if test="createBy != null">
         #{createBy},
@@ -152,19 +153,19 @@
          </trim>
   </insert>
   
-  <update id="updateByPrimaryKeySelective" parameterType="com.heyu.framework.model.SysRole">
-    update sys_role
+  <update id="updateByPrimaryKeySelective" parameterType="com.heyu.framework.model.SysPermission">
+    update sys_permission
     <set>
               <if test="id != null">
         id = #{id},
       </if>
         
-	          <if test="name != null">
-        name = #{name},
+	          <if test="url != null">
+        url = #{url},
       </if>
         
-	          <if test="type != null">
-        type = #{type},
+	          <if test="name != null">
+        name = #{name},
       </if>
         
 	        
@@ -190,19 +191,19 @@
     where id = #{id}
   </update>
   
-  <update id="update" parameterType="com.heyu.framework.model.SysRole">
-    update sys_role
+  <update id="update" parameterType="com.heyu.framework.model.SysPermission">
+    update sys_permission
     set 
           
           id = #{id},
               
        
 	     
-          name = #{name},
+          url = #{url},
               
        
 	     
-          type = #{type},
+          name = #{name},
               
        
 	     

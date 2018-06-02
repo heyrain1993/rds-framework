@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.heyu.framework.dao.SysRoleDao">
+<mapper namespace="com.heyu.framework.dao.SysDictDao">
     <sql id="Base_Column_List">
   	  	sy.id AS id,
-    	  	sy.name AS name,
-    	  	sy.type AS type,
+    	  	sy.parent_code AS parentCode,
+    	  	sy.code AS code,
+    	  	sy.value AS value,
     	  	sy.create_by AS createBy,
     	  	sy.create_date AS createDate,
     	  	sy.update_by AS updateBy,
@@ -14,50 +15,42 @@
     	
   </sql>
   
-  <select id="findById" parameterType="java.lang.String" resultType="com.heyu.framework.model.SysRole">
+  <select id="findById" parameterType="java.lang.String" resultType="com.heyu.framework.model.SysDict">
     select 
     <include refid="Base_Column_List" />
-    from sys_role sy
+    from sys_dict sy
     where sy.id = #{id,jdbcType=VARCHAR}
   </select>
   
-  <select id="findAll" resultType="com.heyu.framework.model.SysRole">
+  <select id="findAll" resultType="com.heyu.framework.model.SysDict">
     select 
     <include refid="Base_Column_List" />
-    from sys_role sy
+    from sys_dict sy
   </select>
 
-  <select id="findList" resultType="com.heyu.framework.model.SysRole">
+  <select id="findList" resultType="com.heyu.framework.model.SysDict">
     select
     <include refid="Base_Column_List" />
-    from sys_role sy
+    from sys_dict sy
 
   </select>
   
   
-  <select id="findAllList" resultType="com.heyu.framework.model.SysRole">
+  <select id="findAllList" resultType="com.heyu.framework.model.SysDict">
     select
     <include refid="Base_Column_List" />
-    from sys_role sy
+    from sys_dict sy
 
   </select>
-
-    <select id="findByUserId" resultType="com.heyu.framework.model.SysRole">
-        select
-        <include refid="Base_Column_List" />
-        from sys_role sy left join user_role ur on sy.id = ur.rid
-        where ur.uid = #{userId}
-
-    </select>
   
   
   <delete id="delete" parameterType="java.lang.String">
-    delete from sys_role
+    delete from sys_dict
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   
   <delete id="deleteBatch">
-    delete from sys_role
+    delete from sys_dict
     where id IN
    <foreach item="item" index="index" collection="list"
       open="(" separator="," close=")">
@@ -65,11 +58,12 @@
   </foreach>
   </delete>
   
-  <insert id="insert" parameterType="com.heyu.framework.model.SysRole">
-    insert into sys_role (	
+  <insert id="insert" parameterType="com.heyu.framework.model.SysDict">
+    insert into sys_dict (	
     	id,
-        	name,
-        	type,
+        	parent_code,
+        	code,
+        	value,
         	create_by,
         	create_date,
         	update_by,
@@ -79,8 +73,9 @@
             	)
     values (
 			#{id},
-        		#{name},
-        		#{type},
+        		#{parentCode},
+        		#{code},
+        		#{value},
         		#{createBy},
         		#{createDate},
         		#{updateBy},
@@ -90,17 +85,20 @@
         )
   </insert>
   
-  <insert id="insertSelective" parameterType="com.heyu.framework.model.SysRole">
-    insert into sys_role
+  <insert id="insertSelective" parameterType="com.heyu.framework.model.SysDict">
+    insert into sys_dict
     <trim prefix="(" suffix=")" suffixOverrides=",">
           <if test="id != null">
         id,
       </if>
-          <if test="name != null">
-        name,
+          <if test="parentCode != null">
+        parent_code,
       </if>
-          <if test="type != null">
-        type,
+          <if test="code != null">
+        code,
+      </if>
+          <if test="value != null">
+        value,
       </if>
           <if test="createBy != null">
         create_by,
@@ -125,11 +123,14 @@
            <if test="id != null">
         #{id},
       </if>
-           <if test="name != null">
-        #{name},
+           <if test="parentCode != null">
+        #{parentCode},
       </if>
-           <if test="type != null">
-        #{type},
+           <if test="code != null">
+        #{code},
+      </if>
+           <if test="value != null">
+        #{value},
       </if>
            <if test="createBy != null">
         #{createBy},
@@ -152,19 +153,23 @@
          </trim>
   </insert>
   
-  <update id="updateByPrimaryKeySelective" parameterType="com.heyu.framework.model.SysRole">
-    update sys_role
+  <update id="updateByPrimaryKeySelective" parameterType="com.heyu.framework.model.SysDict">
+    update sys_dict
     <set>
               <if test="id != null">
         id = #{id},
       </if>
         
-	          <if test="name != null">
-        name = #{name},
+	          <if test="parentCode != null">
+        parent_code = #{parentCode},
       </if>
         
-	          <if test="type != null">
-        type = #{type},
+	          <if test="code != null">
+        code = #{code},
+      </if>
+        
+	          <if test="value != null">
+        value = #{value},
       </if>
         
 	        
@@ -190,19 +195,23 @@
     where id = #{id}
   </update>
   
-  <update id="update" parameterType="com.heyu.framework.model.SysRole">
-    update sys_role
+  <update id="update" parameterType="com.heyu.framework.model.SysDict">
+    update sys_dict
     set 
           
           id = #{id},
               
        
 	     
-          name = #{name},
+          parent_code = #{parentCode},
               
        
 	     
-          type = #{type},
+          code = #{code},
+              
+       
+	     
+          value = #{value},
               
        
 	     

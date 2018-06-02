@@ -39,6 +39,7 @@ public class LoginController {
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
 	public String login(HttpServletRequest request,SysUser user,Model model,RedirectAttributes redirectAttributes) {
 		System.out.println("快速登录使用");
+
 		if(user == null || StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
 			redirectAttributes.addFlashAttribute("message", "用户名或密码不能为空");
 			return "redirect:login";//登录失败
@@ -46,7 +47,8 @@ public class LoginController {
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
 		try {
-			
+			//内部会先调用realm中的getCachedAuthenticationInfo方法获取缓存中的用户信息
+			// 如果没有在调用Realm类中的doGetAuthenticationInfo方法获取用户信息
 			subject.login(token);
 			System.out.println("index");
 			//登录成功
